@@ -10,7 +10,7 @@ import io
 bot = TelegramClient('bot', Config.api_id, Config.api_hash).start(bot_token=Config.token)
 
 default_start_msg = """
-**If you want premium bins & hacking stuffs in your channel add this bot admin in your and use command in channel /add**
+__If you want premium Bins & Hacking stuffs in your channel then add this bot admin in your and use command in channel /add__
 """
 
 
@@ -239,7 +239,7 @@ async def handler(event):
             msg += f"\n\n**Made By {name}**"
     except Exception as e:
         print(e)
-    await bot.send_message(event.chat_id, msg, buttons = button)
+    await bot.edit(event.chat_id, msg, buttons = button)
 
 print("Bot Started")
 bot.run_until_disconnected()
