@@ -222,24 +222,21 @@ async def lel(event):
     await event.edit(H_TXT, buttons=[
                                      [Button.inline("Back", data="startxd")]])
 
+S_TXT = """
+**Heya {first_name}**
+
+
+__If you want premium Bins & Hacking stuffs in your channel then add this bot admin in your and use command in channel /add__
+
+
+Enter /help to know more about it!
+
+**Made By ✘ Dᴇᴍᴏɴ ✘**
+"""
 @bot.on(events.callbackquery.CallbackQuery(data="startxd"))
-async def handler(event):
-    entity = await bot.get_entity(event.chat_id)
-    first_name = entity.first_name
-    button = [[(Button.url("Updates", "https://t.me/MrBinnerBotUpdates")), (Button.inline("Help", data="helpxd"))]] 
-    if Config.start_msg:
-        start_msg = Config.start_msg
-    else:
-        start_msg = default_start_msg
-    msg = f"**Heya {first_name}**\n\n{start_msg}\n\nEnter /help to know more about it!"
-    try:
-        owner = await bot.get_entity(Config.ownerID[0])
-        name = owner.first_name
-        if name:
-            msg += f"\n\n**Made By {name}**"
-    except Exception as e:
-        print(e)
-    await bot.edit(event.chat_id, msg, buttons = button)
+async def lel(event):
+    await event.edit(S_TXT, buttons=[
+                                     [Button.url("Updates", "https://t.me/MrBinnerBotUpdates"), Button.inline("Help", data="helpxd")]])
 
 print("Bot Started")
 bot.run_until_disconnected()
