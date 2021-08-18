@@ -9,19 +9,21 @@ import io
 
 bot = TelegramClient('bot', Config.api_id, Config.api_hash).start(bot_token=Config.token)
 
-default_start_msg = """To use this bot, add the bot in your channel aur send /add"""
+default_start_msg = """
+**If you want premium bins & hacking stuffs in your channel add this bot admin in your and use command in channel /add**
+"""
 
 
 @bot.on(events.NewMessage(func = lambda e: e.is_private, pattern=r'/start'))
 async def handler(event):
     entity = await bot.get_entity(event.chat_id)
     first_name = entity.first_name
-    button = [[(Button.url("Repo Link", "https://github.com/leeveshkamboj/TGBroadcastBot"))]] 
+    button = [[(Button.url("Updates", "https://t.me/MrBinnerBotUpdates")), (Button.inline("Help", data="helpxd"))]] 
     if Config.start_msg:
         start_msg = Config.start_msg
     else:
         start_msg = default_start_msg
-    msg = f"**Yo {first_name}**\n\n{start_msg}\n\nEnter /help for more commands"
+    msg = f"**Heya {first_name}**\n\n{start_msg}\n\nEnter /help to know more about it!"
     try:
         owner = await bot.get_entity(Config.ownerID[0])
         name = owner.first_name
@@ -34,9 +36,9 @@ async def handler(event):
 
 @bot.on(events.NewMessage(func = lambda e: e.is_private, pattern=r'/help'))
 async def handler(event):
-    msg = "**Commands available-**\n\n/add - Add channel to database\n/rem - Remove channel from database"
+    msg = "**Commands available-\n\n/add - Add channel in our list\n/rem - Remove channel from our list**"
     if event.chat_id in Config.ownerID:
-        msg += "\n/send - Reply /send to any message to send it to all channels\n/list - to list all channels in database\n/clean - to clean database"
+        msg += "\n/send - Reply /send to any message to send it to all channels\n/list - to list all channels in database"
     await bot.send_message(event.chat_id, msg)
 
 
@@ -204,7 +206,40 @@ async def genAcc(event):
 async def handler(event):
     await event.reply("Yo")
 
+H_TXT = """
+**Heya! It's me @MrBinneBot**
 
+__I am simple bot made by python to help people in posting bins, so make sure not to spam and use below commands to know more.__
+
+**How To Use:**
+1. Make Me Admin In Channel/Group
+2. And Send /add in Channel/Group
+3. Done! That's it.
+"""
+
+@bot.on(events.callbackquery.CallbackQuery(data="helpxd"))
+async def lel(event):
+    await event.edit(H_TXT, buttons=[
+                                     [Button.inline("Back", data="startxd")]])
+
+@bot.on(events.callbackquery.CallbackQuery(data="startxd"))
+async def handler(event):
+    entity = await bot.get_entity(event.chat_id)
+    first_name = entity.first_name
+    button = [[(Button.url("Updates", "https://t.me/MrBinnerBotUpdates")), (Button.inline("Help", data="helpxd"))]] 
+    if Config.start_msg:
+        start_msg = Config.start_msg
+    else:
+        start_msg = default_start_msg
+    msg = f"**Heya {first_name}**\n\n{start_msg}\n\nEnter /help to know more about it!"
+    try:
+        owner = await bot.get_entity(Config.ownerID[0])
+        name = owner.first_name
+        if name:
+            msg += f"\n\n**Made By {name}**"
+    except Exception as e:
+        print(e)
+    await bot.send_message(event.chat_id, msg, buttons = button)
 
 print("Bot Started")
 bot.run_until_disconnected()
