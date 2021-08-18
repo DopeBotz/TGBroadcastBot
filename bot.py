@@ -223,7 +223,7 @@ async def lel(event):
                                      [Button.inline("Back", data="startxd")]])
 
 S_TXT = """
-**Heya {first_name}**
+**Heya Again!**
 
 
 __If you want premium Bins & Hacking stuffs in your channel then add this bot admin in your and use command in channel /add__
